@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <h2>📚 Book List</h2>
+
+<table class="table table-bordered table-striped mt-5">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Author</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of books; track $index) {
+    <tr>
+      <td>{{ $index + 1 }}</td>
+      <td>{{ item.title }}</td>
+      <td>{{ item.description }}</td>
+      <td>{{ item.author }}</td>
+      <td>{{ item.quantity }}</td>
+    </tr>
+    }
+  </tbody>
+</table>
+</div>

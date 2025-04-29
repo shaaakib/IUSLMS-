@@ -1,0 +1,25 @@
+import { Component, inject } from '@angular/core';
+import { Book } from '../../models/book.model';
+import { ApiService } from '../../core/api.service';
+
+@Component({
+  selector: 'app-book-list',
+  imports: [],
+  templateUrl: './book-list.component.html',
+  styleUrl: './book-list.component.css'
+})
+export class BookListComponent {
+  books: Book[] = [];
+
+  apiSrv = inject(ApiService);
+
+  ngOnInit(): void {
+    this.apiSrv.getAllBooks().subscribe((data: Book[]) => {
+      this.books = data;
+    },
+    error => {
+      console.error('Error fetching books:', error);
+    }
+  );
+  }
+}
