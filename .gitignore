@@ -1,0 +1,75 @@
+# ========================
+# ASP.NET Core + Angular
+# ========================
+
+# Solution folders
+API/
+UI/
+
+# ========== COMMON IGNORES ==========
+
+# Ignore .vs and Visual Studio user files
+.vs/
+*.user
+*.suo
+
+# Ignore build output folders
+bin/
+obj/
+
+# ========== ANGULAR FRONTEND IGNORES ==========
+# Build output
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Angular specific
+/.angular/cache/
+.sass-cache/
+
+# Logs
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+
+# ========== IDE / EDITOR FILES ==========
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains IDEs (WebStorm, Rider, etc.)
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+*.launch
+
+# Sublime
+*.sublime-workspace
+
+# Cloud9
+.c9/
+
+# ========== SYSTEM FILES ==========
+
+.DS_Store
+Thumbs.db
+.history/
+
+# ========== ENVIRONMENT VARIABLES ==========
+.env
+*.env
