@@ -15,8 +15,16 @@ export class ApiService {
     return this.http.get<Book[]>(`${this.apiUrl}/GetAllBooks`);
   }
 
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>(`${this.apiUrl}/GetBookById/${id}`);
+  }
+
   Create(book: Book) {
     return this.http.post<Book>(`${this.apiUrl}/Create`, book);
+  }
+
+  Update(id: number, book: Book) {
+    return this.http.put<Book>(`${this.apiUrl}/Update/${id}`, book);
   }
 
 }

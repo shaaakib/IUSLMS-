@@ -26,10 +26,7 @@
           <td>{{ item.author }}</td>
           <td class="text-center">{{ item.quantity }}</td>
           <td class="text-center">
-            <!-- <button class="btn btn-sm btn-warning me-2" (click)="editBook(item.id)">
-              ✏️ Edit
-            </button> -->
-            <button class="btn btn-sm btn-warning me-2">
+            <button class="btn btn-sm btn-warning me-2"  [routerLink]="['/edit-list', item.id]" >
               ✏️ Edit
             </button>
             <!-- <button class="btn btn-sm btn-danger" (click)="deleteBook(item.id)">

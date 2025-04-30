@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <h2 class="mb-4">✏️ Edit Book</h2>
+    <form (ngSubmit)="updateBook()">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input class="form-control" [(ngModel)]="editedBook.title" name="title" required>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" [(ngModel)]="editedBook.description" name="description" required></textarea>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input class="form-control" [(ngModel)]="editedBook.author" name="author" required>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input class="form-control" type="number" [(ngModel)]="editedBook.quantity" name="quantity" required>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Back</button>
+    </form>
+  </div>
+  
