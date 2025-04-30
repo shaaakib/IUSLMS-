@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Book } from '../models/book.model';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { Issue } from '../models/issue.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,12 @@ export class ApiService {
     return this.http.put<User>(`${this.apiUrl}/User/Update/${id}`, user);
   }
   
+  getAllIssues(): Observable<Issue[]> {
+    return this.http.get<Issue[]>(`${this.apiUrl}/Issues/GetAllIssues`);
+  }
+
+  createIssue(issue: Partial<Issue>): Observable<Issue> {
+    return this.http.post<Issue>(`${this.apiUrl}/Issues/Create`, issue);
+  }
 
 }

@@ -9,6 +9,9 @@ import { EditListComponent } from './books/edit-list/edit-list.component';
 import { SignUpComponent } from './core/login/sign-up/sign-up.component';
 import { UserListComponent } from './core/login/user-list/user-list.component';
 import { EditUserComponent } from './core/login/edit-user/edit-user.component';
+import { IssueListComponent } from './Issue/issue-list/issue-list.component';
+import { EditIssueComponent } from './Issue/edit-issue/edit-issue.component';
+import { AddIssueComponent } from './Issue/add-issue/add-issue.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +31,9 @@ export const routes: Routes = [
       { path: 'edit-list/:id', component: EditListComponent },
       { path: 'user-list', component: UserListComponent },
       { path: 'edit-user/:id', component: EditUserComponent },
+      { path: 'issue-list', component: IssueListComponent },
+      { path: 'edit-issue/:id', component: EditIssueComponent },
+      { path: 'add-issue', component: AddIssueComponent },
     ],
   },
 

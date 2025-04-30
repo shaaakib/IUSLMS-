@@ -21,8 +21,10 @@
         <input class="form-control" type="number" [(ngModel)]="editedBook.quantity" name="quantity" required>
       </div>
   
-      <button type="submit" class="btn btn-primary">Update</button>
-      <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Back</button>
+      <div class="d-flex justify-content-start gap-2 mt-3">
+        <button type="submit" class="btn btn-success">Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="goBack()">← Back to List</button>
+      </div>
     </form>
   </div>
   

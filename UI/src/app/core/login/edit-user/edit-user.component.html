@@ -13,8 +13,10 @@
         <label class="form-label">Role</label>
         <input [(ngModel)]="user.role" name="role" class="form-control" required />
       </div>
-      <button class="btn btn-success" type="submit">💾 Update</button>
-      <button class="btn btn-secondary ms-2" type="button" (click)="goBack()">🔙 Back</button>
+      <div class="d-flex justify-content-start gap-2 mt-3">
+        <button type="submit" class="btn btn-success">💾 Update</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="goBack()">← Back to List</button>
+      </div>
     </form>
   </div>
   
