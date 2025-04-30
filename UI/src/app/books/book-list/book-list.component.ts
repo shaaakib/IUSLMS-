@@ -1,14 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { Book } from '../../models/book.model';
 import { ApiService } from '../../core/api.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
 export class BookListComponent {
+  
   books: Book[] = [];
 
   apiSrv = inject(ApiService);
@@ -27,5 +29,4 @@ export class BookListComponent {
   );
   }
 
-  
 }
