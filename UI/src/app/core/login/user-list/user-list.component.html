@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>👥 User List</h2>
+    </div>
+  
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users; track $index) {
+          <tr>
+            <td class="text-center">{{ $index + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" [routerLink]="['/edit-user', user.id]">
+                ✏️ Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">
+                🗑️ Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  

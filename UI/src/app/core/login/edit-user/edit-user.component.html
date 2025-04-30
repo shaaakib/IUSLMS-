@@ -1,0 +1,20 @@
+<div class="container mt-5">
+    <h2 class="mb-4">✏️ Edit User</h2>
+    <form (ngSubmit)="updateUser()">
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input [(ngModel)]="user.name" name="name" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input [(ngModel)]="user.email" name="email" class="form-control" required type="email" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Role</label>
+        <input [(ngModel)]="user.role" name="role" class="form-control" required />
+      </div>
+      <button class="btn btn-success" type="submit">💾 Update</button>
+      <button class="btn btn-secondary ms-2" type="button" (click)="goBack()">🔙 Back</button>
+    </form>
+  </div>
+  

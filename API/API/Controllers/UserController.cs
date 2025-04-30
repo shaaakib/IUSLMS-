@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         // GET: api/User
-        [HttpGet]
+        [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _db.Users.ToListAsync();
@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}")]
+        [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _db.Users.FindAsync(id);
@@ -64,7 +64,7 @@ namespace API.Controllers
         }
 
         // PUT: api/User/5
-        [HttpPut("{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
         {
             if (id != updatedUser.Id)
@@ -83,8 +83,8 @@ namespace API.Controllers
         }
 
         // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
             var user = await _db.Users.FindAsync(id);
             if (user == null)

@@ -15,6 +15,7 @@ export class SignUpComponent {
     id: 0,
     name: '',
     email: '',
+    password: '',
     role: ''
   };
 

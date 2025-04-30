@@ -7,6 +7,8 @@ import { authGuard } from './core/auth.guard';
 import { AddListComponent } from './books/add-list/add-list.component';
 import { EditListComponent } from './books/edit-list/edit-list.component';
 import { SignUpComponent } from './core/login/sign-up/sign-up.component';
+import { UserListComponent } from './core/login/user-list/user-list.component';
+import { EditUserComponent } from './core/login/edit-user/edit-user.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +26,8 @@ export const routes: Routes = [
       },
       { path: 'add-list', component: AddListComponent },
       { path: 'edit-list/:id', component: EditListComponent },
+      { path: 'user-list', component: UserListComponent },
+      { path: 'edit-user/:id', component: EditUserComponent },
     ],
   },
 

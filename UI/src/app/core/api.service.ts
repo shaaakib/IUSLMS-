@@ -36,4 +36,21 @@ export class ApiService {
     return this.http.post<User>(`${this.apiUrl}/User/Create`, user);
   }
 
+  GetAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/User/GetAllUsers`);
+  }
+
+  DeleteUser(id: number) {
+    return this.http.delete(`${this.apiUrl}/User/Delete/${id}`);
+  }
+
+  GetUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/User/GetUserById/${id}`);
+  }
+  
+  UpdateUser(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/User/Update/${id}`, user);
+  }
+  
+
 }
