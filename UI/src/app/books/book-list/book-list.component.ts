@@ -14,6 +14,10 @@ export class BookListComponent {
   apiSrv = inject(ApiService);
 
   ngOnInit(): void {
+    this.getAllBooks();
+  }
+
+  getAllBooks() {
     this.apiSrv.getAllBooks().subscribe((data: Book[]) => {
       this.books = data;
     },
@@ -22,4 +26,6 @@ export class BookListComponent {
     }
   );
   }
+
+  
 }
