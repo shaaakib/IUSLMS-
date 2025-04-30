@@ -27,4 +27,8 @@ export class ApiService {
     return this.http.put<Book>(`${this.apiUrl}/Update/${id}`, book);
   }
 
+  Delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/Delete/${id}`);
+  }
+
 }

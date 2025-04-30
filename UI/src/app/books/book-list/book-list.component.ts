@@ -29,4 +29,14 @@ export class BookListComponent {
   );
   }
 
+  deleteBook(id: number): void {
+    if (confirm('Are you sure you want to delete this book?')) {
+      this.apiSrv.Delete(id).subscribe(() => {
+        this.books = this.books.filter(book => book.id !== id); // remove from UI
+      }, error => {
+        console.error('Error deleting book:', error);
+      });
+    }
+  }
+  
 }
