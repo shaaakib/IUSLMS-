@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -13,13 +13,18 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    if (this.auth.login(this.email, this.password)) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      alert('Invalid credentials');
-    }
+    this.authService.login(this.email, this.password).subscribe(
+      (response) => {
+        localStorage.setItem('authToken', response.token);
+        this.router.navigate(['/home']);
+      },
+      (error) => {
+        console.error('Login failed', error);
+        alert('Invalid credentials');
+      }
+    );
   }
 }

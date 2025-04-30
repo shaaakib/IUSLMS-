@@ -6,10 +6,12 @@ import { LoginComponent } from './core/login/login/login.component';
 import { authGuard } from './core/auth.guard';
 import { AddListComponent } from './books/add-list/add-list.component';
 import { EditListComponent } from './books/edit-list/edit-list.component';
+import { SignUpComponent } from './core/login/sign-up/sign-up.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'sign-up', component: SignUpComponent },
 
   {
     path: '',
