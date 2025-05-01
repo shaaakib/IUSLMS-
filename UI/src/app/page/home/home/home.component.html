@@ -1,42 +1,99 @@
 <app-navbar></app-navbar>
 
-<div class="container mb-4">
-  <h2 class="my-4">📚 Featured Books</h2>
-  <div class="row g-3">
-    <div class="col-md-4">
+<!-- Hero Section -->
+<section class="hero-section py-5 bg-light rounded shadow-sm mb-5">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Text Content -->
+      <div class="col-md-6 text-center text-md-start mb-4 mb-md-0" data-aos="fade-right" data-aos-duration="1000">
+        <h1 class="display-4 fw-bold text-primary mb-3">📚 Library Management System</h1>
+        <p class="lead text-muted">
+          Welcome to the Library! Explore, issue, and return your favorite books with ease. Your gateway to endless knowledge.
+        </p>
+        <a href="#" class="btn btn-primary btn-lg rounded-pill mt-3 shadow-sm">Browse Books</a>
+      </div>
+
+      <!-- Book Image -->
+      <div class="col-md-6 text-center" data-aos="fade-left" data-aos-duration="1000">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/29/29302.png"
+          alt="Books"
+          class="img-fluid hero-book-image"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Book Categories -->
+<section class="p-5 rounded bg-white shadow-sm mb-5">
+  <h2 class="mb-4 text-center display-6 fw-bold">📂 Book Categories</h2>
+  <p class="text-center text-muted mb-5">Explore a wide variety of books across different genres.</p>
+  
+  <div class="row justify-content-center">
+    <div 
+      class="col-md-3 mb-4" 
+      *ngFor="let cat of categories" 
+      data-aos="zoom-in" 
+      data-aos-duration="800"
+    >
+      <div class="card h-100 border-0 shadow-lg rounded-4 category-card transition">
+        <div class="card-body text-center">
+          <div class="mb-3 fs-1">{{ cat.icon }}</div>
+          <h5 class="card-title fw-bold">{{ cat.name }}</h5>
+          <p class="card-text text-muted">{{ cat.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Featured Books -->
+<section class="p-5 rounded bg-light shadow-sm mb-5">
+  <h2 class="mb-4 text-center display-6 fw-bold">📚 Featured Books</h2>
+  
+  <!-- Filter Section -->
+  <div class="row g-3 justify-content-center mb-5">
+    <div class="col-md-3">
       <input
         type="text"
         [(ngModel)]="searchText"
-        class="form-control"
-        placeholder="Search by title or author"
+        class="form-control rounded-3 shadow-sm"
+        placeholder="🔍 Search by title or author"
       />
     </div>
-    <div class="col-md-4">
-      <select [(ngModel)]="selectedAuthor" class="form-select">
-        <option value="">All Authors</option>
+    <div class="col-md-3">
+      <select [(ngModel)]="selectedAuthor" class="form-select rounded-3 shadow-sm">
+        <option value="">🧑‍🏫 All Authors</option>
         <option *ngFor="let author of uniqueAuthors" [value]="author">
           {{ author }}
         </option>
       </select>
     </div>
-    <div class="col-md-4">
-      <select [(ngModel)]="quantityFilter" class="form-select">
-        <option value="">All Stock</option>
-        <option value="low">Low (1-3)</option>
-        <option value="medium">Medium (4-7)</option>
+    <div class="col-md-3">
+      <select [(ngModel)]="quantityFilter" class="form-select rounded-3 shadow-sm">
+        <option value="">📦 All Stock</option>
+        <option value="low">Low (1–3)</option>
+        <option value="medium">Medium (4–7)</option>
         <option value="high">High (8+)</option>
       </select>
     </div>
   </div>
-</div>
 
-<div class="container">
+  <!-- Books List -->
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col" *ngFor="let book of filteredBooks">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body d-flex flex-column">
+    <div
+      class="col"
+      *ngFor="let book of filteredBooks"
+      data-aos="fade-up"
+      data-aos-duration="800"
+    >
+      <div class="card h-100 shadow-lg border-0 rounded-4 featured-card transition">
+        <div class="card-body d-flex flex-column p-4">
           <h5 class="card-title fw-bold text-primary">{{ book.title }}</h5>
-          <p class="card-text text-muted mb-2">{{ book.description }}</p>
+          <p class="card-text text-muted">{{ book.description }}</p>
           <p class="mb-1">
             <span class="fw-semibold">Author:</span> {{ book.author }}
           </p>
@@ -44,10 +101,102 @@
             <span class="fw-semibold">Quantity:</span> {{ book.quantity }}
           </p>
           <div class="mt-auto text-end">
-            <button class="btn btn-outline-primary btn-sm">View Details</button>
+            <button class="btn btn-outline-primary btn-sm rounded-pill">View Details</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- About Section -->
+<section class="about-section p-5 bg-gradient-light shadow-sm rounded mb-5">
+  <h2 class="text-center display-5 fw-bold text-primary mb-4" data-aos="fade-up" data-aos-duration="1000">👨‍💻 About Us</h2>
+  
+  <!-- Short description -->
+  <p class="text-center text-muted mb-5 lead" data-aos="fade-up" data-aos-duration="1200">
+    Our mission is to revolutionize library management by making it user-friendly and accessible to all, making every book just a click away.
+  </p>
+
+  <!-- Content Row -->
+  <div class="row justify-content-center">
+    <!-- Card: Our Mission -->
+    <div class="col-md-5" data-aos="fade-right" data-aos-duration="1300">
+      <div class="card shadow-lg border-0 rounded-4 about-card">
+        <div class="card-body p-5">
+          <h4 class="card-title text-primary fw-bold">Our Mission</h4>
+          <p class="card-text text-muted">
+            To create an intuitive platform that allows users to find, borrow, and manage books with ease, while enabling libraries to operate efficiently.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Our Vision -->
+    <div class="col-md-5" data-aos="fade-left" data-aos-duration="1300">
+      <div class="card shadow-lg border-0 rounded-4 about-card">
+        <div class="card-body p-5">
+          <h4 class="card-title text-primary fw-bold">Our Vision</h4>
+          <p class="card-text text-muted">
+            To empower communities by making knowledge accessible to all, fostering a culture of learning, growth, and innovation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Button Section -->
+  <div class="text-center mt-4">
+    <a href="#" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">
+      Learn More
+    </a>
+  </div>
+</section>
+
+
+<footer class="bg-dark text-white pt-5 pb-3 mt-5">
+  <div class="container">
+    <div class="row">
+      <!-- About Section -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold text-uppercase mb-3">📚 About Library</h5>
+        <p>
+          Welcome to our Library Management System! Here you can explore, issue, and return books with ease. Our library has a wide range of books to enhance your knowledge.
+        </p>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold text-uppercase mb-3">🔗 Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white text-decoration-none hover-link">🏠 Home</a></li>
+          <li><a href="#" class="text-white text-decoration-none hover-link">📚 Books</a></li>
+          <li><a href="#" class="text-white text-decoration-none hover-link">📂 Categories</a></li>
+          <li><a href="#" class="text-white text-decoration-none hover-link">👨‍💼 About Us</a></li>
+          <li><a href="#" class="text-white text-decoration-none hover-link">📞 Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold text-uppercase mb-3">📬 Contact Us</h5>
+        <p>If you have any questions, feel free to contact us. We are here to help you!</p>
+        <p>Email: <a href="mailto:info@library.com" class="text-white">infolibrary.com</a></p>
+        <p>Phone: +880 100000000</p>
+        <div class="social-icons mt-3">
+          <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="bg-white" />
+    
+    <!-- Footer Bottom -->
+    <div class="text-center">
+      <p class="text-muted mb-0">&copy; 2025 Library Management System. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

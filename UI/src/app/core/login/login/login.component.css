@@ -1,0 +1,54 @@
+/* FadeIn Animation for the Card */
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Input Transition */
+  .input-transition {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .input-transition:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+  }
+  
+  /* Button Hover Animation */
+  .btn-animation {
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-animation:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+  }
+  
+  /* Underline Effect for Links */
+  .hover-underline:hover {
+    text-decoration: underline;
+  }
+  
+  /* Card Styling */
+  .card {
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    background: #fff;
+  }
+  
+  /* Input Focus Border Color */
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  }
+  

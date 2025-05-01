@@ -15,7 +15,6 @@ namespace API.Controllers
         {
             _db = db;
         }
-        // GET: api/Issue
 
         [HttpGet("GetAllIssues")]
         public async Task<ActionResult<IEnumerable<Issue>>> GetAllIssues()
@@ -26,7 +25,6 @@ namespace API.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Issue/5
         [HttpGet("GetIssueById/{id}")]
         public async Task<ActionResult<Issue>> GetIssueById(int id)
         {
@@ -41,7 +39,6 @@ namespace API.Controllers
             return issue;
         }
 
-        // POST: api/Issue/Create
         [HttpPost("Create")]
         public async Task<ActionResult<Issue>> Create(Issue issue)
         {
@@ -53,7 +50,6 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetIssueById), new { id = issue.Id }, issue);
         }
 
-        // PUT: api/Issue/Update/5
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> Update(int id, Issue issue)
         {
@@ -76,7 +72,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Issue/Delete/5
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

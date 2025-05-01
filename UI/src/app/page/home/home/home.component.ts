@@ -18,6 +18,13 @@ export class HomeComponent implements OnInit {
   selectedAuthor: string = '';
   quantityFilter: string = '';
 
+  categories = [
+    { name: 'Science', icon: '🧪', desc: 'Physics, Chemistry, Biology' },
+    { name: 'Technology', icon: '💻', desc: 'Programming, AI, Data' },
+    { name: 'Literature', icon: '📖', desc: 'Novels, Poetry, Drama' },
+    { name: 'Self-Help', icon: '🧠', desc: 'Habits, Productivity' },
+  ];
+
   apiSrv = inject(ApiService);
 
   ngOnInit(): void {
