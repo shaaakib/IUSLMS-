@@ -13,6 +13,7 @@ import { IssueListComponent } from './Issue/issue-list/issue-list.component';
 import { EditIssueComponent } from './Issue/edit-issue/edit-issue.component';
 import { AddIssueComponent } from './Issue/add-issue/add-issue.component';
 import { adminGuard } from './core/admin.guard';
+import { BookDetailsComponent } from './books/book-details/book-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +36,7 @@ export const routes: Routes = [
       { path: 'issue-list', component: IssueListComponent},
       { path: 'edit-issue/:id', component: EditIssueComponent},
       { path: 'add-issue', component: AddIssueComponent },
+      { path: 'books/:id', component: BookDetailsComponent, canActivate: [authGuard] },
     ],
   },
 

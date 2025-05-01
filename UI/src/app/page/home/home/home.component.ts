@@ -4,11 +4,12 @@ import { ApiService } from '../../../core/api.service';
 import { Book } from '../../../models/book.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FormsModule],
+  imports: [NavbarComponent, CommonModule, FormsModule,RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

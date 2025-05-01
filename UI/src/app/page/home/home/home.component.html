@@ -101,7 +101,9 @@
             <span class="fw-semibold">Quantity:</span> {{ book.quantity }}
           </p>
           <div class="mt-auto text-end">
-            <button class="btn btn-outline-primary btn-sm rounded-pill">View Details</button>
+            <a [routerLink]="['/books', book.id]" class="btn btn-outline-primary btn-sm rounded-pill">
+              View Details
+            </a>
           </div>
         </div>
       </div>
