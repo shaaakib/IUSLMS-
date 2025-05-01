@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable, of } from 'rxjs';
 export class AuthService {
   private apiUrl = 'https://localhost:7242/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<any> {
     // Send login request to API
@@ -22,5 +23,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 }
