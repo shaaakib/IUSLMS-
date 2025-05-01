@@ -61,4 +61,16 @@ export class ApiService {
     return this.http.post<Issue>(`${this.apiUrl}/Issues/Create`, issue);
   }
 
+  deleteIssue(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/Issues/Delete/${id}`);
+  }
+
+  getIssueById(id: number): Observable<Issue> {
+    return this.http.get<Issue>(`${this.apiUrl}/Issues/GetIssueById/${id}`);
+  }
+
+  updateIssue(id: number, issue: Partial<Issue>): Observable<Issue> {
+    return this.http.put<Issue>(`${this.apiUrl}/Issues/Update/${id}`, issue);
+  }
+
 }

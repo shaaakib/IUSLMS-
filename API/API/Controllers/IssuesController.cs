@@ -1,11 +1,14 @@
 ﻿using DataAccess.Data;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]
     public class IssuesController : ControllerBase
@@ -38,6 +41,7 @@ namespace API.Controllers
 
             return issue;
         }
+
 
         [HttpPost("Create")]
         public async Task<ActionResult<Issue>> Create(Issue issue)

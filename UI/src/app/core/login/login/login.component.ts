@@ -19,6 +19,7 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe(
       (response) => {
         localStorage.setItem('authToken', response.token);
+        localStorage.setItem('role', response.role);
         this.router.navigate(['/home']);
       },
       (error) => {

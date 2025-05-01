@@ -1,7 +1,9 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>👥 Issue List</h2>
-    <a class="btn btn-primary" routerLink="/add-issue"> ➕ Add New Issue </a>
+    <a class="btn btn-primary" routerLink="/add-issue" *ngIf="auth.isAdmin()">
+      ➕ Add New Issue
+    </a>
   </div>
 
   <table class="table table-bordered table-striped">
@@ -12,13 +14,12 @@
         <th>Book</th>
         <th>Issue Date</th>
         <th>Return Date</th>
-        <th>Actions</th>
+        <th *ngIf="auth.isAdmin()">Actions</th>
       </tr>
     </thead>
     <tbody>
-      @for (issue of issues; track $index) {
-      <tr>
-        <td class="text-center">{{ $index + 1 }}</td>
+      <tr *ngFor="let issue of issues; let i = index">
+        <td class="text-center">{{ i + 1 }}</td>
         <td>{{ issue.user?.name }}</td>
         <td>{{ issue.book?.title }}</td>
         <td>{{ issue.issueDate | date : "dd-MM-yyyy" }}</td>
@@ -29,14 +30,13 @@
               : "Not returned"
           }}
         </td>
-        <td class="text-center">
-          <button class="btn btn-sm btn-warning me-2">✏️ Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteIssue()">
+        <td *ngIf="auth.isAdmin()" class="text-center">
+          <a [routerLink]="['/edit-issue', issue.id]" class="btn btn-sm btn-warning me-2">✏️ Edit</a>
+          <button class="btn btn-sm btn-danger" (click)="deleteIssue(issue.id)">
             🗑️ Delete
           </button>
         </td>
       </tr>
-      }
     </tbody>
   </table>
 </div>

@@ -12,6 +12,7 @@ import { EditUserComponent } from './core/login/edit-user/edit-user.component';
 import { IssueListComponent } from './Issue/issue-list/issue-list.component';
 import { EditIssueComponent } from './Issue/edit-issue/edit-issue.component';
 import { AddIssueComponent } from './Issue/add-issue/add-issue.component';
+import { adminGuard } from './core/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,10 +30,10 @@ export const routes: Routes = [
       },
       { path: 'add-list', component: AddListComponent },
       { path: 'edit-list/:id', component: EditListComponent },
-      { path: 'user-list', component: UserListComponent },
+      { path: 'user-list', component: UserListComponent, canActivate: [adminGuard]},
       { path: 'edit-user/:id', component: EditUserComponent },
-      { path: 'issue-list', component: IssueListComponent },
-      { path: 'edit-issue/:id', component: EditIssueComponent },
+      { path: 'issue-list', component: IssueListComponent},
+      { path: 'edit-issue/:id', component: EditIssueComponent},
       { path: 'add-issue', component: AddIssueComponent },
     ],
   },

@@ -12,17 +12,26 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<any> {
-    // Send login request to API
     const loginData = { email, password };
     return this.http.post<any>(`${this.apiUrl}/User/Login`, loginData);
+  }
+
+  logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('role');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('authToken');
   }
 
-  logout() {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+  getUserRole(): string | null {
+    return localStorage.getItem('role');
   }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'Admin';
+  }
+
 }

@@ -1,11 +1,14 @@
 ﻿using DataAccess.Data;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -16,7 +19,6 @@ namespace API.Controllers
             _db = db;
         }
 
-        // GET: api/User
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -24,7 +26,6 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        // GET: api/User/5
         [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -35,10 +36,16 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        // POST: api/User
         [HttpPost("Create")]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
+            // Check if a user with the same email already exists
+            var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (existingUser != null)
+            {
+                return Conflict(new { message = "User with this email already exists." });
+            }
+
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
@@ -59,11 +66,11 @@ namespace API.Controllers
             return Ok(new
             {
                 token = "dummy-jwt-token",
+                role = user.Role,
                 user = new { user.Id, user.Name, user.Email }
             });
         }
 
-        // PUT: api/User/5
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
         {
@@ -82,7 +89,6 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        // DELETE: api/User/5
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
