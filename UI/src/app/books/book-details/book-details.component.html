@@ -1,20 +1,54 @@
-<div class="container mt-5" *ngIf="book">
+<div class="container py-5" *ngIf="book">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card rounded-4 p-4">
-        <h2 class="text-primary fw-bold text-center mb-4">{{ book.title }}</h2>
-        <p class="text-muted fs-5 mb-3"><strong>Description:</strong> {{ book.description }}</p>
-        <p class="fs-5 mb-3"><strong>Author:</strong> {{ book.author }}</p>
-        <div class="mb-3">
-          <label for="quantityInput" class="form-label fw-semibold text-dark">Quantity to Issue:</label>
-          <input type="number" id="quantityInput" class="form-control p-3 border-0 shadow-sm" [(ngModel)]="issueQuantity" min="1" [max]="book?.quantity || null">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow-lg border-0 rounded-4 p-4 bg-light">
+        <div class="text-center mb-4">
+          <h1 class="text-primary fw-bold">{{ book.title }}</h1>
+          <p class="text-muted fs-5">{{ book.author }}</p>
         </div>
-        <div class="d-flex justify-content-between mt-4">
-          <!-- Back to List Button -->
-          <button routerLink="/book-list" class="btn btn-outline-primary btn-lg px-4 py-2" (click)="goBack()">
+
+        <div class="mb-4">
+          <h5 class="fw-semibold text-dark">📖 Description:</h5>
+          <p class="text-secondary fs-5">{{ book.description }}</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="returnDate" class="form-label fw-semibold">📅 Return Date:</label>
+            <input
+              type="date"
+              id="returnDate"
+              class="form-control form-control-lg shadow-sm"
+              [(ngModel)]="returnDate"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="quantityInput" class="form-label fw-semibold">🔢 Quantity to Issue:</label>
+            <input
+              type="number"
+              id="quantityInput"
+              class="form-control form-control-lg shadow-sm"
+              [(ngModel)]="issueQuantity"
+              min="1"
+              [max]="book?.quantity || null"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <button
+            routerLink="/book-list"
+            class="btn btn-outline-secondary btn-lg rounded-pill px-4"
+            (click)="goBack()"
+          >
             ← Back to List
           </button>
-          <button class="btn btn-success btn-lg px-4 py-2" (click)="issueBook()">
+
+          <button
+            class="btn btn-success btn-lg rounded-pill px-4"
+            (click)="issueBook()"
+          >
             📚 Issue Book
           </button>
         </div>

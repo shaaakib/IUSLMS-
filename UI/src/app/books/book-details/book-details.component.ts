@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-book-details',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, ],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.css',
 })
@@ -24,6 +24,7 @@ export class BookDetailsComponent implements OnInit {
   
 
   issueQuantity: number = 1;
+  returnDate: string = '';
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -44,6 +45,7 @@ export class BookDetailsComponent implements OnInit {
     const issue: Partial<Issue> = {
       bookId: this.book.id,
       userId: 1,
+      returnDate: this.returnDate,
       quantity: this.issueQuantity 
     };
   

@@ -32,7 +32,7 @@ export class UserListComponent {
 
   deleteUser(id: number): void {
     if (confirm('Are you sure you want to delete this book?')) {
-      this.apiSrv.Delete(id).subscribe(() => {
+      this.apiSrv.DeleteUser(id).subscribe(() => {
         this.users = this.users.filter(user => user.id !== id);
       }, error => {
         console.error('Error deleting book:', error);

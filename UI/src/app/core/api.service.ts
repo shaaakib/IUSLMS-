@@ -62,7 +62,7 @@ export class ApiService {
   }
 
   deleteIssue(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/Issues/Delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/Issues/Delete/${id}`)
   }
 
   getIssueById(id: number): Observable<Issue> {

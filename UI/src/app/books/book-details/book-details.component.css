@@ -1,95 +1,13 @@
-/* Custom Styles for Professional Look */
-
 .card {
-    background-color: #f8f9fa; /* Light background color */
-    border-radius: 1.5rem;
-    border: none;
-  }
-  
-  .card h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #0056b3; /* Strong blue for the title */
-  }
-  
-  .card .form-label {
-    font-size: 1.1rem;
-    color: #343a40; /* Dark text for better contrast */
-  }
-  
-  .card .form-control {
-    font-size: 1rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: #f1f3f5;
-    border: 1px solid #ced4da;
-  }
-  
-  .card .form-control:focus {
-    border-color: #80bdff; /* Light blue focus */
-    box-shadow: 0 0 0 0.25rem rgba(38, 143, 255, 0.25); /* Blue shadow */
-  }
-  
-  .card .btn {
-    font-size: 1.1rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .card .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Slight shadow on hover */
-  }
-  
-  .card .btn-outline-primary {
-    border-color: #007bff;
-    color: #007bff;
-  }
-  
-  .card .btn-outline-primary:hover {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .card .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    color: white;
-  }
-  
-  .card .btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-  }
-  
-  .mb-3 {
-    margin-bottom: 1.5rem; /* Increased margin for better spacing */
-  }
-  
-  .d-flex {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .card p {
-    font-size: 1.15rem;
-    line-height: 1.5;
-  }
-  
-  .text-muted {
-    font-weight: 400;
-  }
-  
-  .text-primary {
-    font-weight: 700;
-  }
-  
-  @media (max-width: 768px) {
-    .col-md-8 {
-      width: 100%; /* Full width on small screens */
-    }
-  
-    .card {
-      padding: 2rem; /* Adjust padding for smaller devices */
-    }
-  }
-  
+  background: #f8f9fa;
+  border-radius: 20px;
+}
+
+label {
+  font-size: 1rem;
+}
+
+input[type="date"],
+input[type="number"] {
+  height: 50px;
+}
