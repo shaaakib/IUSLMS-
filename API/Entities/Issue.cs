@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,8 @@ namespace Entities
 
         public DateTime IssueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public string? Status { get; set; } = "Pending";
+        public int? Quantity { get; set; }
 
         public User? User { get; set; }
         public Book? Book { get; set; }

@@ -14,6 +14,7 @@
         <th>Book</th>
         <th>Issue Date</th>
         <th>Return Date</th>
+        <th>Status</th>
         <th *ngIf="auth.isAdmin()">Actions</th>
       </tr>
     </thead>
@@ -23,6 +24,7 @@
         <td>{{ issue.user?.name }}</td>
         <td>{{ issue.book?.title }}</td>
         <td>{{ issue.issueDate | date : "dd-MM-yyyy" }}</td>
+        <td>{{ issue.status }}</td>
         <td>
           {{
             issue.returnDate
@@ -31,11 +33,16 @@
           }}
         </td>
         <td *ngIf="auth.isAdmin()" class="text-center">
-          <a [routerLink]="['/edit-issue', issue.id]" class="btn btn-sm btn-warning me-2">✏️ Edit</a>
-          <button class="btn btn-sm btn-danger" (click)="deleteIssue(issue.id)">
-            🗑️ Delete
-          </button>
+          <ng-container *ngIf="issue.status === 'Pending'; else editDelete">
+            <button class="btn btn-sm btn-success me-1" (click)="approve(issue.id)">✅ Approve</button>
+            <button class="btn btn-sm btn-secondary" (click)="reject(issue.id)">❌ Reject</button>
+          </ng-container>
+          <ng-template #editDelete>
+            <a [routerLink]="['/edit-issue', issue.id]" class="btn btn-sm btn-warning me-2">✏️ Edit</a>
+            <button class="btn btn-sm btn-danger" (click)="deleteIssue(issue.id)">🗑️ Delete</button>
+          </ng-template>
         </td>
+        
       </tr>
     </tbody>
   </table>

@@ -73,4 +73,19 @@ export class ApiService {
     return this.http.put<Issue>(`${this.apiUrl}/Issues/Update/${id}`, issue);
   }
 
+  issueBook(issue: Partial<Issue>): Observable<Issue> {
+    return this.http.post<Issue>(`${this.apiUrl}/Issues/Create`, issue);
+  }
+
+  approveIssue(id: number): Observable<Issue> {
+    return this.http.put<Issue>(`${this.apiUrl}/Issues/Approve/${id}`, {});
+  }
+  
+  rejectIssue(id: number): Observable<Issue> {
+    return this.http.put<Issue>(`${this.apiUrl}/Issues/Reject/${id}`, {});
+  }
+
+  getMyIssues(): Observable<Issue[]> {
+    return this.http.get<Issue[]>(`${this.apiUrl}/Issues/GetMyIssues`);
+  }
 }

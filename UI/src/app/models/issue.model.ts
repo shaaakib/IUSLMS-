@@ -4,6 +4,8 @@ export interface Issue {
     bookId: number;
     issueDate: string;
     returnDate?: string;
+    status?: string;
+    quantity?: number;
     user?: {
       id: number;
       name: string;
