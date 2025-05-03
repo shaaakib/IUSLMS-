@@ -23,10 +23,12 @@ namespace API.Controllers
         [HttpGet("GetAllIssues")]
         public async Task<ActionResult<IEnumerable<Issue>>> GetAllIssues()
         {
-            return await _db.Issues
+            var res = await _db.Issues
                 .Include(i => i.User)
                 .Include(i => i.Book)
                 .ToListAsync();
+
+            return Ok(res);
         }
 
 
