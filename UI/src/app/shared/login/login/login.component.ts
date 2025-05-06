@@ -5,9 +5,9 @@ import { AuthService } from '../../../core/authentication/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   email = '';
@@ -18,13 +18,13 @@ export class LoginComponent {
   login() {
     this.authService.login(this.email, this.password).subscribe(
       (response) => {
-        localStorage.setItem('authToken', response.token);
-        localStorage.setItem('role', response.role);
+        this.authService.saveLoginData(response);
         this.router.navigate(['/home']);
       },
       (error) => {
         console.error('Login failed', error);
-        alert('Invalid credentials');
+        const errorMessage = error.error?.message || 'Login failed';
+        alert(errorMessage);
       }
     );
   }

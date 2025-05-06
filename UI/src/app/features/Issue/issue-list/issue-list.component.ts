@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../core/api.service';
 import { AuthService } from '../../../core/authentication/auth.service';
 import { Issue } from '../issue.model';
+import { IssuesService } from '../services/issues.service';
 
 @Component({
   selector: 'app-issue-list',
@@ -15,7 +15,7 @@ export class IssueListComponent implements OnInit {
   issues: Issue[] = [];
 
   constructor(
-    private apiSrv: ApiService,
+    private apiSrv: IssuesService,
     public auth: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -34,6 +34,7 @@ export class IssueListComponent implements OnInit {
       },
     });
   }
+  
 
   deleteIssue(issueId: number): void {
     if (confirm('Are you sure you want to delete this issue?')) {

@@ -20,15 +20,52 @@ namespace API.Controllers
             _db = db;
         }
 
-        [HttpGet("GetAllIssues")]
-        public async Task<ActionResult<IEnumerable<Issue>>> GetAllIssues()
-        {
-            var res = await _db.Issues
-                .Include(i => i.User)
-                .Include(i => i.Book)
-                .ToListAsync();
+        //[HttpGet("GetAllIssues")]
+        //public async Task<ActionResult<IEnumerable<Issue>>> GetAllIssues()
+        //{
+        //    var res = await _db.Issues
+        //        .Include(i => i.User)
+        //        .Include(i => i.Book)
+        //        .ToListAsync();
 
-            return Ok(res);
+        //    return Ok(res);
+        //}
+
+        [Authorize]
+        [HttpGet("GetAllIssues")]
+        public async Task<IActionResult> GetAllIssues()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var roleClaim = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || string.IsNullOrEmpty(roleClaim))
+            {
+                return Unauthorized("Invalid token claims.");
+            }
+
+            var userId = int.Parse(userIdClaim);
+
+            if (roleClaim == "Admin")
+            {
+                // ✅ Admin sees all issues
+                var allIssues = await _db.Issues
+                    .Include(i => i.Book)
+                    .Include(i => i.User)
+                    .ToListAsync();
+
+                return Ok(allIssues);
+            }
+            else
+            {
+                // Normal user sees only their issues
+                var userIssues = await _db.Issues
+                    .Where(i => i.UserId == userId)
+                    .Include(i => i.Book)
+                    .Include(i => i.User)
+                    .ToListAsync();
+
+                return Ok(userIssues);
+            }
         }
 
 
@@ -50,6 +87,12 @@ namespace API.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<Issue>> Create(Issue issue)
         {
+            var userExists = await _db.Users.AnyAsync(u => u.Id == issue.UserId);
+            if (!userExists)
+            {
+                return BadRequest($"User with ID {issue.UserId} does not exist.");
+            }
+
             issue.IssueDate = DateTime.Now;
             issue.Status = "Pending";
             _db.Issues.Add(issue);

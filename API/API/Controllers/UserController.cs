@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -14,9 +18,11 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        public UserController(ApplicationDbContext db)
+        private readonly IConfiguration _config;
+        public UserController(ApplicationDbContext db, IConfiguration config)
         {
             _db = db;
+            _config = config;
         }
 
         [HttpGet("GetAllUsers")]
@@ -25,6 +31,26 @@ namespace API.Controllers
             var users = await _db.Users.ToListAsync();
             return Ok(users);
         }
+
+        //[HttpGet("GetUserById/{id}")]
+        //public async Task<IActionResult> GetUser(int id)
+        //{
+        //    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    // Check if the current user is trying to access their own data or if they are an admin
+        //    if (currentUserId != id.ToString() && !User.IsInRole("Admin"))
+        //    {
+        //        return Unauthorized(new { message = "You are not authorized to view this data." });
+        //    }
+
+        //    var user = await _db.Users.FindAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(user);
+        //}
 
         [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetUser(int id)
@@ -52,20 +78,17 @@ namespace API.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto )
+        public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
-            var user = await _db.Users
-                .FirstOrDefaultAsync(u => u.Email == userLoginDto.Email && u.Password == userLoginDto.Password);
-
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email && u.Password == dto.Password);
             if (user == null)
-            {
-                return Unauthorized(new { message = "Invalid email or password" });
-            }
+                return Unauthorized(new { message = "Invalid credentials" });
 
-            // Normally, you would return a JWT token. For demo, sending a dummy token.
+            var token = GenerateJwtToken(user);
+
             return Ok(new
             {
-                token = "dummy-jwt-token",
+                token = token,
                 role = user.Role,
                 user = new { user.Id, user.Name, user.Email }
             });
@@ -99,6 +122,30 @@ namespace API.Controllers
             _db.Users.Remove(user);
             await _db.SaveChangesAsync();
             return Ok(new { message = "User deleted successfully" });
+        }
+
+
+        private string GenerateJwtToken(User user)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

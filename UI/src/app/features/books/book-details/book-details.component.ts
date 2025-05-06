@@ -21,8 +21,6 @@ export class BookDetailsComponent implements OnInit {
     private router: Router,
   ) {}
 
-  
-
   issueQuantity: number = 1;
   returnDate: string = '';
 
@@ -41,10 +39,17 @@ export class BookDetailsComponent implements OnInit {
 
   issueBook() {
     if (!this.book) return;
+
+    const userId = Number(localStorage.getItem('userId'));
+
+    if (!userId) {
+      alert('User not logged in.');
+      return;
+    }
   
     const issue: Partial<Issue> = {
       bookId: this.book.id,
-      userId: 1,
+      userId: userId,
       returnDate: this.returnDate,
       quantity: this.issueQuantity 
     };

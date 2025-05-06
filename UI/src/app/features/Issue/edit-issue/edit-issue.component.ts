@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Issue } from '../issue.model';
 import { User } from '../../../shared/user.model';
 import { Book } from '../../books/book.model';
+import { IssuesService } from '../services/issues.service';
 import { ApiService } from '../../../core/api.service';
 
 @Component({
@@ -30,13 +31,14 @@ export class EditIssueComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private apiSsues: IssuesService,
     private api: ApiService
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
-      this.api.getIssueById(id).subscribe((res) => {
+      this.apiSsues.getIssueById(id).subscribe((res) => {
         this.issue = res;
         console.log('Fetched issue:', this.issue);
       });
@@ -63,7 +65,7 @@ export class EditIssueComponent {
       returnDate: this.issue.returnDate,
     };
 
-    this.api.updateIssue(id, updateData).subscribe(() => {
+    this.apiSsues.updateIssue(id, updateData).subscribe(() => {
       alert('✅ Issue updated successfully!');
       this.router.navigate(['/issue-list']);
     });

@@ -9,14 +9,14 @@ import { Issue } from '../issue.model';
 
 @Component({
   selector: 'app-add-issue',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-issue.component.html',
-  styleUrl: './add-issue.component.css'
+  styleUrl: './add-issue.component.css',
 })
 export class AddIssueComponent {
   issue: Partial<Issue> = {
     userId: 0,
-    bookId: 0
+    bookId: 0,
   };
 
   users: User[] = [];
@@ -30,11 +30,11 @@ export class AddIssueComponent {
   }
 
   loadUsers() {
-    this.api.GetAllUsers().subscribe(res => this.users = res);
+    this.api.GetAllUsers().subscribe((res) => (this.users = res));
   }
 
   loadBooks() {
-    this.api.getAllBooks().subscribe(res => this.books = res);
+    this.api.getAllBooks().subscribe((res) => (this.books = res));
   }
 
   createIssue() {
@@ -45,7 +45,9 @@ export class AddIssueComponent {
       },
       error: (err) => {
         console.error('❌ Failed to create issue', err);
-      }
+        const errorMessage = err.error?.message || 'create issue failed!';
+        alert(errorMessage);
+      },
     });
   }
 

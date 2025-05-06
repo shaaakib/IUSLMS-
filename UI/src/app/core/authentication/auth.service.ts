@@ -16,9 +16,16 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/User/Login`, loginData);
   }
 
+  saveLoginData(response: any) {
+    localStorage.setItem('authToken', response.token);
+    localStorage.setItem('role', response.role);
+    localStorage.setItem('userId', response.user.id);
+  }
+
   logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
 
