@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiService } from '../../../core/api.service';
-import { User } from '../../user.model';
+import { User } from '../../../shared/user.model';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-user-list',
@@ -14,7 +14,7 @@ export class UserListComponent {
  
   users: User[] = [];
 
-  apiSrv = inject(ApiService);
+  apiSrv = inject(SharedService);
 
   ngOnInit(): void {
     this.GetAllUsers();

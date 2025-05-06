@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,10 @@ namespace Entities
 
         [Required]
         public string? Role { get; set; }
+        [Required]
+        public string? PhoneNumber { get; set; }
+        public string? Otp { get; set; }
+        public bool? IsPhoneVerified { get; set; } = false;
+
     }
 }

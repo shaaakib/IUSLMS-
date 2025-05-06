@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../core/api.service';
 import { User } from '../../user.model';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,15 +17,19 @@ export class SignUpComponent {
     email: '',
     password: '',
     role: '',
+    phoneNumber: '',
+    otp: '' 
   };
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(private apiService: SharedService, private router: Router) {}
 
   signUp() {
-    this.apiService.CreateUser(this.user).subscribe({
+    this.apiService.SignUp(this.user).subscribe({
       next: () => {
-        alert('User created successfully!');
-        this.router.navigate(['/login']);
+        alert('OTP sent! Please check console.');
+        this.router.navigate(['/verify-otp'], {
+          queryParams: { phone: this.user.phoneNumber }
+        });
       },
       error: (err) => {
         if (err.status === 409) {
@@ -33,7 +37,7 @@ export class SignUpComponent {
         } else {
           alert('❌ Something went wrong. Please try again.');
         }
-      },
+      }
     });
   }
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Book } from '../book.model';
 import { ApiService } from '../../../core/api.service';
 import { Issue } from '../../Issue/issue.model';
+import { IssuesService } from '../../Issue/services/issues.service';
 
 @Component({
   selector: 'app-book-details',
@@ -18,6 +19,7 @@ export class BookDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
+    private issuesApi: IssuesService,
     private router: Router,
   ) {}
 
@@ -54,7 +56,7 @@ export class BookDetailsComponent implements OnInit {
       quantity: this.issueQuantity 
     };
   
-    this.api.issueBook(issue).subscribe({
+    this.issuesApi.issueBook(issue).subscribe({
       next: (res) => {
         alert('Book issue request sent. Pending admin approval.');
         this.goBack();

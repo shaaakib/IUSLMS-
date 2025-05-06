@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../core/api.service';
-import { User } from '../../user.model';
+import { User } from '../../../shared/user.model';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -22,7 +22,7 @@ export class EditUserComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: SharedService,
     private router: Router
   ) {}
 

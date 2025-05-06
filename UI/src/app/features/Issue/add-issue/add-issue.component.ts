@@ -6,6 +6,8 @@ import { Book } from '../../books/book.model';
 import { User } from '../../../shared/user.model';
 import { ApiService } from '../../../core/api.service';
 import { Issue } from '../issue.model';
+import { IssuesService } from '../services/issues.service';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-add-issue',
@@ -22,7 +24,12 @@ export class AddIssueComponent {
   users: User[] = [];
   books: Book[] = [];
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private issueApi: IssuesService,
+    private sharedService: SharedService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -30,7 +37,7 @@ export class AddIssueComponent {
   }
 
   loadUsers() {
-    this.api.GetAllUsers().subscribe((res) => (this.users = res));
+    this.sharedService.GetAllUsers().subscribe((res) => (this.users = res));
   }
 
   loadBooks() {
@@ -38,7 +45,7 @@ export class AddIssueComponent {
   }
 
   createIssue() {
-    this.api.createIssue(this.issue).subscribe({
+    this.issueApi.createIssue(this.issue).subscribe({
       next: (res) => {
         alert('✅ Issue created successfully!');
         this.router.navigate(['/issue-list']);

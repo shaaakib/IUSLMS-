@@ -7,6 +7,7 @@ import { User } from '../../../shared/user.model';
 import { Book } from '../../books/book.model';
 import { IssuesService } from '../services/issues.service';
 import { ApiService } from '../../../core/api.service';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-edit-issue',
@@ -31,14 +32,15 @@ export class EditIssueComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiSsues: IssuesService,
+    private apiIsues: IssuesService,
+    private apiShared: SharedService,
     private api: ApiService
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
-      this.apiSsues.getIssueById(id).subscribe((res) => {
+      this.apiIsues.getIssueById(id).subscribe((res) => {
         this.issue = res;
         console.log('Fetched issue:', this.issue);
       });
@@ -48,7 +50,7 @@ export class EditIssueComponent {
   }
 
   loadUsers() {
-    this.api.GetAllUsers().subscribe((res) => (this.users = res));
+    this.apiShared.GetAllUsers().subscribe((res) => (this.users = res));
   }
 
   loadBooks() {
@@ -65,7 +67,7 @@ export class EditIssueComponent {
       returnDate: this.issue.returnDate,
     };
 
-    this.apiSsues.updateIssue(id, updateData).subscribe(() => {
+    this.apiIsues.updateIssue(id, updateData).subscribe(() => {
       alert('✅ Issue updated successfully!');
       this.router.navigate(['/issue-list']);
     });
