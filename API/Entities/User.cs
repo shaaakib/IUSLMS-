@@ -24,8 +24,6 @@ namespace Entities
         public string? Role { get; set; }
         [Required]
         public string? PhoneNumber { get; set; }
-        public string? Otp { get; set; }
-        public bool? IsPhoneVerified { get; set; } = false;
 
     }
 }

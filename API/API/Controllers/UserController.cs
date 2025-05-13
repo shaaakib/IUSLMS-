@@ -43,72 +43,21 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        //[HttpPost("SignUp")]
-        //public async Task<IActionResult> CreateUser([FromBody] User user)
-        //{
-        //    // Check if a user with the same email already exists
-        //    var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-        //    if (existingUser != null)
-        //    {
-        //        return Conflict(new { message = "User with this email already exists." });
-        //    }
-
-        //    _db.Users.Add(user);
-        //    await _db.SaveChangesAsync();
-        //    return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
-        //}
-
         [HttpPost("SignUp")]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
+            // Check if a user with the same email already exists
             var existingUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (existingUser != null)
             {
                 return Conflict(new { message = "User with this email already exists." });
             }
 
-            // Generate OTP
-            var otp = new Random().Next(100000, 999999).ToString();
-
-            // Send OTP (Mocked)
-            var twilioService = new MOCKSMSsending();
-            var isOtpSent = twilioService.SendOtp(user.PhoneNumber, otp);
-
-            if (!isOtpSent)
-            {
-                return BadRequest(new { message = "Failed to send OTP." });
-            }
-
-            // Save user with OTP
-            user.Otp = otp;
-            user.IsPhoneVerified = false;
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
-
-            return Ok(new { message = "OTP sent (mock). Please verify." });
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-        [HttpPost("VerifyOtp")]
-        public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpDto verifyOtpDto)
-        {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == verifyOtpDto.PhoneNumber);
-
-            if (user == null)
-            {
-                return NotFound(new { message = "User not found." });
-            }
-
-            if (user.Otp != verifyOtpDto.Otp)
-            {
-                return BadRequest(new { message = "Invalid OTP." });
-            }
-
-            user.IsPhoneVerified = true;
-            user.Otp = null; // Clear OTP
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "Phone number verified successfully!" });
-        }
 
 
         [HttpPost("Login")]

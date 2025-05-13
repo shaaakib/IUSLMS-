@@ -18,7 +18,6 @@ export class SignUpComponent {
     password: '',
     role: '',
     phoneNumber: '',
-    otp: '' 
   };
 
   constructor(private apiService: SharedService, private router: Router) {}
@@ -26,10 +25,8 @@ export class SignUpComponent {
   signUp() {
     this.apiService.SignUp(this.user).subscribe({
       next: () => {
-        alert('OTP sent! Please check console.');
-        this.router.navigate(['/verify-otp'], {
-          queryParams: { phone: this.user.phoneNumber }
-        });
+        alert('SignUp succeefull.');
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         if (err.status === 409) {

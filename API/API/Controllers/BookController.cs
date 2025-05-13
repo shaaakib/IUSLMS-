@@ -1,8 +1,10 @@
 ﻿using DataAccess.Data;
 using Entities;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -12,9 +14,11 @@ namespace API.Controllers
     public class BookController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        public BookController(ApplicationDbContext db)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public BookController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet("GetAllBooks")]
@@ -32,49 +36,141 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            return Ok(book);
+
+            // Generate full image URL
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var fullImageUrl = string.IsNullOrEmpty(book.ImageUrl)
+                ? null
+                : $"{baseUrl}/{book.ImageUrl}";
+
+            return Ok(new
+            {
+                book.Id,
+                book.Title,
+                book.Description,
+                book.Author,
+                book.Quantity,
+                ImageUrl = fullImageUrl
+            });
         }
 
 
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] Book book)
+        public async Task<IActionResult> Create([FromForm] BookCreateDto bookDto)
         {
-            if (book == null)
+            if (bookDto == null)
             {
-                return BadRequest("Book is null");
+                return BadRequest("Book data is missing.");
             }
+
+            // Check for existing book data
+            var existingBook = await _db.Books
+                .FirstOrDefaultAsync(b => b.Title == bookDto.Title && b.Author == bookDto.Author);
+
+            if (existingBook != null)
+            {
+                return Conflict("Book already exists.");
+            }
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = null;
+            string bookPath = Path.Combine(wwwRootPath, "images", "book");
+
+            // Ensure folder exists
+            if (!Directory.Exists(bookPath))
+            {
+                Directory.CreateDirectory(bookPath);
+            }
+
+            if (bookDto.Image != null)
+            {
+                fileName = Guid.NewGuid().ToString() + Path.GetExtension(bookDto.Image.FileName);
+                string fullPath = Path.Combine(bookPath, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await bookDto.Image.CopyToAsync(stream);
+                }
+            }
+
+            var book = new Book
+            {
+                Title = bookDto.Title,
+                Description = bookDto.Description,
+                Author = bookDto.Author,
+                Quantity = bookDto.Quantity,
+                ImageUrl = fileName != null ? Path.Combine(@"\images\book\", fileName).Replace("\\", "/") : null
+            };
+
             _db.Books.Add(book);
-            _db.SaveChanges();
-            return CreatedAtAction(nameof(GetAllBooks), new { id = book.Id }, book);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(Create), new { id = book.Id }, book);
         }
 
+
+
         [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] Book book)
+        public async Task<IActionResult> Update(int id, [FromForm] BookUpdateDto bookDto)
         {
-            if (book == null || book.Id != id)
+            if (bookDto == null || bookDto.Id != id)
             {
                 return BadRequest("Book is null or ID mismatch");
             }
 
-            var existingBook = _db.Books.Find(id);
+            var existingBook = await _db.Books.FindAsync(id);
             if (existingBook == null)
             {
-                return NotFound();
+                return NotFound("Book not found");
             }
 
-            existingBook.Title = book.Title;
-            existingBook.Description = book.Description;
-            existingBook.Author = book.Author;
-            existingBook.Quantity = book.Quantity;
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = existingBook.ImageUrl; // Keep existing image if no new image is provided
+            string bookPath = Path.Combine(wwwRootPath, "images", "book");
 
-            _db.SaveChanges();
+            if (!Directory.Exists(bookPath))
+            {
+                Directory.CreateDirectory(bookPath);
+            }
+
+            // If new image is provided
+            if (bookDto.Image != null)
+            {
+                // Delete old image if exists
+                if (!string.IsNullOrEmpty(existingBook.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(wwwRootPath, existingBook.ImageUrl.TrimStart('\\', '/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                fileName = Guid.NewGuid().ToString() + Path.GetExtension(bookDto.Image.FileName);
+                string fullPath = Path.Combine(bookPath, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await bookDto.Image.CopyToAsync(stream);
+                }
+
+                existingBook.ImageUrl = Path.Combine("images/book", fileName).Replace("\\", "/");
+            }
+
+            // Update other fields
+            existingBook.Title = bookDto.Title;
+            existingBook.Description = bookDto.Description;
+            existingBook.Author = bookDto.Author;
+            existingBook.Quantity = bookDto.Quantity;
+
+            await _db.SaveChangesAsync();
+
             return Ok(new
             {
                 success = true,
-                data = book,
+                data = existingBook,
                 message = "Book updated successfully"
             });
-
         }
 
 

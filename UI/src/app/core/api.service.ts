@@ -20,17 +20,15 @@ export class ApiService {
     return this.http.get<Book>(`${this.apiUrl}/Book/GetBookById/${id}`);
   }
 
-  Create(book: Book) {
-    return this.http.post<Book>(`${this.apiUrl}/Book/Create`, book);
+  Create(formData: FormData) {
+    return this.http.post<Book>(`${this.apiUrl}/Book/Create`, formData);
   }
 
-  Update(id: number, book: Book) {
-    return this.http.put<Book>(`${this.apiUrl}/Book/Update/${id}`, book);
+  updateBookWithForm(id: number, bookData: FormData) {
+    return this.http.put(`${this.apiUrl}/Book/Update/${id}`, bookData);
   }
 
   Delete(id: number) {
     return this.http.delete(`${this.apiUrl}/Book/Delete/${id}`);
   }
-
-  
 }

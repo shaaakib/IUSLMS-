@@ -31,10 +31,5 @@ export class SharedService {
     return this.http.put<User>(`${this.apiUrl}/User/Update/${id}`, user);
   }
 
-  verifyOtp(phone: string, otp: string){
-    return this.http.post<User>(`${this.apiUrl}/User/VerifyOtp`, {
-      phoneNumber: phone,
-      otp: otp
-    });
-  }
+
 }

@@ -4,7 +4,6 @@ export interface User {
     email: string;
     password: string;
     role: string;
-    phoneNumber?: string; 
-    otp?: string;
+    phoneNumber?: string;
   }
   

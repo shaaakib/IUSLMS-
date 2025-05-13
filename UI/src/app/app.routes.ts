@@ -14,13 +14,11 @@ import { adminGuard } from './core/guards/admin.guard';
 import { SignUpComponent } from './shared/signup/sign-up/sign-up.component';
 import { UserListComponent } from './features/user/user-list/user-list.component';
 import { EditUserComponent } from './features/user/edit-user/edit-user.component';
-import { VerifyOtpComponent } from './shared/verify-otp/verify-otp.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'verify-otp', component: VerifyOtpComponent },
 
   {
     path: '',
