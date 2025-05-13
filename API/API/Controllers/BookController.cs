@@ -25,6 +25,11 @@ namespace API.Controllers
         public IActionResult GetAllBooks()
         {
             var books = _db.Books.ToList();
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";  // Get the base URL of your API
+            foreach (var book in books)
+            {
+                book.ImageUrl = string.IsNullOrEmpty(book.ImageUrl) ? null : $"{baseUrl}/{book.ImageUrl}";
+            }
             return Ok(books);
         }
 

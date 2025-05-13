@@ -8,7 +8,6 @@ import { NavbarComponent } from '../../../shared/navbar/navbar/navbar.component'
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [CommonModule, FormsModule,RouterLink, NavbarComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -38,6 +37,8 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+
 
   get uniqueAuthors(): string[] {
     return [...new Set(this.books.map(book => book.author))];
